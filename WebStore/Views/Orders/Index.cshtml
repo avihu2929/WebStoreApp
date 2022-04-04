@@ -1,0 +1,146 @@
+﻿@using Microsoft.ML.Runtime.Api
+@model IEnumerable<WebStore.Models.OrderViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Cart</h2>
+<a asp-action="Pay">Pay</a>
+
+<table class="table">
+    <thead>
+
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Total Price
+        </th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+           
+    
+
+            <th>
+                @item.ProductName
+            </th>
+            <th>
+                @item.Num
+            </th>
+            <th>
+                @item.Price ₪
+            </th>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+    
+
+
+</table>
+<script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+<footer>
+    @if (ViewData["PredictionID"] != null)
+    {
+        <h1> You may also like </h1>
+
+        <div>
+            <div>
+                <img src="@Url.Content("~/images/"+ViewData["PredictionID"]+".jpg")" style="width:60px;height:60px;" alt="Image" />
+
+                @ViewData["PredictionTitle"]
+
+                , Price:   @ViewData["PredictionPrice"]
+
+            </div>
+            <div>
+
+
+                @using (Html.BeginForm("InsertToCart", "Products", FormMethod.Post))
+                {
+                    <input type="hidden" name="price" id="price" value=@ViewData["PredictionPrice"]>
+                    <input type="hidden" name="pid" id="pid" value=@ViewData["PredictionID"]>
+                    <div class="quantity">
+
+                        <button class="plus-btn" type="button" name="button">
+                            <img src="~/images/plus.svg" alt="" />
+                        </button>
+
+                        <input type="text" name="num" id="num" value="0">
+
+                        <button class="minus-btn" type="button" name="button">
+                            <img src="~/images/minus.svg" alt="" />
+                        </button>
+
+                    </div>
+
+                    <input type="submit" value="Add To Cart" />
+                }
+
+            </div>
+
+
+        </div>
+
+
+    }
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        $('.minus-btn').on('click',
+            function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $input = $this.closest('div.quantity').find('input');
+                var value = parseInt($input.val());
+
+                if (value > 1) {
+                    value = value - 1;
+                } else {
+                    value = 0;
+                }
+
+                $input.val(value);
+
+            });
+
+        $('.plus-btn').on('click',
+            function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $input = $this.closest('div.quantity').find('input');
+                var value = parseInt($input.val());
+
+                if (value < 100) {
+                    value = value + 1;
+                } else {
+                    value = 100;
+                }
+
+                $input.val(value);
+            });
+
+    </script>
+
+
+
+</footer>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebStore.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+<head>
+    <link rel="stylesheet" href="~/css/animate.css">
+</head>
+
+
+<div class="animated fadeInDown">
+
+    <h1>
+        Categories
+    </h1>
+
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+
+<p>
+
+    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+    {
+        <a asp-action="Create">Create New</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+         
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+
+                    <h6>     <a asp-action="Watch" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title) </a>  </h6>
+
+                            </td>
+                <td>
+                
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+
+                        <a asp-action="Edit" asp-route-id="@item.Id">| Edit |</a>
+                        <a asp-action="Details" asp-route-id="@item.Id"> Details |</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"> Delete</a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+
+
+<style>
+    h6 {
+        color: black;
+        font-size: 33px;
+        width: 150px;
+        background: white;
+        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+        transition: width 2s;
+        -webkit-transition: font-size 1s;
+        transition: font-size 1s;
+    }
+
+        h6:hover {
+            width: 150px;
+        
+            font-size: 53px;
+        }
+</style>

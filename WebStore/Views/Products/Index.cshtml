@@ -1,0 +1,106 @@
+﻿@model WebStore.Models.ProductCategoryViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br>
+<head>
+    <link rel="stylesheet" href="StyleSheet.css" media="screen" />
+</head>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Title)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Price)
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) ₪
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        @using (Html.BeginForm("InsertToCart", "Products", FormMethod.Post))
+                        {
+                            <input type="hidden" name="price" id="price" value=@item.Price>
+                            <input type="hidden" name="pid" id="pid" value=@item.Id>
+                            <div class="quantity">
+
+                                <button class="plus-btn" type="button" name="button">
+                                    <img src="~/images/plus.svg" alt="" />
+                                </button>
+
+                                <input type="text" name="num" id="num" value="0">
+
+                                <button class="minus-btn" type="button" name="button">
+                                    <img src="~/images/minus.svg" alt="" />
+                                </button>
+
+                            </div>
+
+                            <input type="submit" value="Add To Cart" />
+                        }
+                    }
+                    </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+                        $('.minus-btn').on('click', function (e) {
+                            e.preventDefault();
+                        var $this = $(this);
+                        var $input = $this.closest('div.quantity').find('input');
+                        var value = parseInt($input.val());
+
+                    if (value > 1) {
+                            value = value - 1;
+                        } else {
+                            value = 0;
+                        }
+
+                        $input.val(value);
+
+                    });
+
+                $('.plus-btn').on('click', function (e) {
+                            e.preventDefault();
+                        var $this = $(this);
+                        var $input = $this.closest('div.quantity').find('input');
+                        var value = parseInt($input.val());
+
+                    if (value < 100) {
+                            value = value + 1;
+                        } else {
+                            value = 100;
+                        }
+
+                        $input.val(value);
+                    });
+
+</script>
+
+

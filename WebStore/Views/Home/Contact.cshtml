@@ -1,0 +1,70 @@
+﻿@{
+
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Lato: 100,300,400,700|Luckiest+Guy|Oxygen:300,400" rel="stylesheet">
+<link href="/css/About.css" type="text/css" rel="stylesheet">
+
+<table border="1">
+    <thead>
+        <tr>
+            <th scope="col">Contact Name</th>
+            <th scope="col">Contact Number</th>
+            <th scope="col">Store Adress</th>
+            <th scope="col">Store Location</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td> Yelena Sher </td>
+            <td> 0502619191 </td>
+            <td> Eli Vizel 2 ,Rishon Le Zion </td>
+            <td> Israel </td>
+        </tr>
+        <tr>
+            <td> Avihu Kochero </td>
+            <td> 0509922558 </td>
+            <td> Taj Mahal , Agra </td>
+            <td> India </td>
+        </tr>
+        <tr>
+            <td> Lidor Zilgfer </td>
+            <td> 0523905390 </td>
+            <td> The Great Wall , Huairou</td>
+            <td> China </td>
+        </tr>
+        <tr>
+            <td> Gabi Paley </td>
+            <td> 0548028423 </td>
+            <td> Great Pyramid of Giza, El Giza </td>
+            <td> Egypt </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+
+
+<script>
+    let onMapLoaded = (map) => {
+        let addresses = ["תל חי 2, ראשון לציון", "ז'בוטינסקי 106, ראשון לציון","נתן אלבז 34, אשדוד"]
+        displayAddressesOnMap(map, addresses);
+    }
+</script>
+<div id='printoutPanel'></div>
+
+<div id='myMap'  style='width: 70vw; height: 50vh; zoom:1;'></div>
+<script type="text/javascript" src="~/js/mapsHandler.js"></script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AmCN0E1vgopLlDB0OyIj9jPqzFXwoUlmMpXb0oTZ56YbV-oyK9C6WNr1AKhHKJKo&callback=loadMapScenario' async defer></script>
+
+
+
+<address>
+    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@CE.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@CE.com</a>
+</address>
+

@@ -1,0 +1,157 @@
+﻿@model IEnumerable<WebStore.Models.Product>
+@using WebStore.Models
+@{
+    ViewData["Title"] = "ByCategory";
+}
+
+
+
+
+
+
+
+<head>
+    <link rel="stylesheet" href="~/css/animate.css">
+</head>
+
+
+<div class="animated fadeInDown">
+
+    <h1>
+        @ViewData["Message"]
+    </h1>
+
+</div>
+
+
+
+<p>
+    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+    {
+        <a asp-action="Create">Create New</a>
+    }
+</p>
+
+
+
+<link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+<script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+<meta name="robots" content="noindex,follow" />
+<table class="table">
+    <thead>
+    <thead>
+        <tr>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+           
+            <tr>
+                <td>
+                    <img src="@Url.Content("~/images/"+item.Id+".jpg")"style="width:60px;height:60px;" alt="Image" />
+                   
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @item.Price ₪
+                </td>
+                
+                <td>
+
+
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit |</a>
+                        <a asp-action="Details" asp-route-id="@item.Id"> Details |</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"> Delete</a>
+
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        @using (Html.BeginForm("InsertToCart", "Products", FormMethod.Post))
+                         {
+                             <input type="hidden" name="price" id="price" value=@item.Price>
+                             <input type="hidden" name="pid" id="pid" value=@item.Id>
+                             <div class="quantity">
+
+                                 <button class="plus-btn" type="button" name="button">
+                                     <img src="~/images/plus.svg" alt=""/>
+                                 </button>
+
+                                 <input type="text" name="num" id="num" value="0">
+
+                                 <button class="minus-btn" type="button" name="button">
+                                     <img src="~/images/minus.svg" alt=""/>
+                                 </button>
+
+                             </div>
+
+                             <input type="submit" value="Add To Cart"/>
+                         }
+
+
+
+
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login">Login to buy</a>
+                    }
+
+                </td>
+                <td>
+
+                    <img src="~/images/W5ZN8.png" width="90" height="40" alt="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('example.org'), 'facebook-share-dialog', 'width=626,height=436');return false;">
+
+                    <img src="~/images/hqdefault.jpg" height="60" width="70" alt="Share on Twitter" onclick="javascript:window.open('https://twitter.com/share?text=@item.Title&amp;url=[YOUR_PAGE_URL]', 'Twitter-dialog', 'width=626,height=436');return false;">
+                    <img src="~/images/new-gplus-share-button.png" width="70" height="30" alt="Share on Google Plus" onclick="window.open('https://plus.google.com/share?url=[YOUR_PAGE_URL]', 'Google-dialog', 'width=626,height=436');return false;">
+
+                </td>
+            </tr>
+
+        }
+
+
+                </tbody >
+</table >
+
+                    <script type="text/javascript">
+                        $('.minus-btn').on('click', function (e) {
+                            e.preventDefault();
+                        var $this = $(this);
+                        var $input = $this.closest('div.quantity').find('input');
+                        var value = parseInt($input.val());
+
+                    if (value > 1) {
+                            value = value - 1;
+                        } else {
+                            value = 0;
+                        }
+
+                        $input.val(value);
+
+                    });
+
+                $('.plus-btn').on('click', function (e) {
+                            e.preventDefault();
+                        var $this = $(this);
+                        var $input = $this.closest('div.quantity').find('input');
+                        var value = parseInt($input.val());
+
+                    if (value < 100) {
+                            value = value + 1;
+                        } else {
+                            value = 100;
+                        }
+
+                        $input.val(value);
+                    });
+
+            </script>
